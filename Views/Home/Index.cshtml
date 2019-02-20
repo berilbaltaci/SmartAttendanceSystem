@@ -1,0 +1,134 @@
+﻿@using Microsoft.AspNetCore.Http
+@using Microsoft.EntityFrameworkCore
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "_Layout";
+	DataContext db=new DataContext();
+    User usr = HttpContextAccessor.HttpContext.Session.GetObject<User>("user");
+	
+}
+@if (usr.UserRole == 1)
+{
+	Student getStudent = db.Students.FirstOrDefault(t => t.UserId==usr.UserId);
+	List<CourseStudent> getCourseStudentList = db.CourseStudents.Where(t => t.StudentId == getStudent.StudentId).ToList();
+	Course[] getCourseList = new Course[getCourseStudentList.Count];
+	int i = 0;
+	foreach (var item in getCourseStudentList)
+	{
+		getCourseList[i] = db.Courses.SingleOrDefault(t => t.Id == item.CourseId);
+		i++;
+	}
+	<div class="row">
+		<div class="col-lg-12 col-lg-12">
+			<section class="panel">
+				<header class="panel-heading panel-heading-transparent">
+					<h2 class="panel-title">Alınan Dersler</h2>
+				</header>
+				<div class="panel-body">
+					<div class="table-responsive">
+						<table class="table table-striped mb-none">
+							<thead>
+							<tr>
+								<th>#</th>
+								<th>Dersler</th>
+								<th>Ders Kodu</th>
+								<th>Devamsızlık Sayısı</th>
+								<th>Durum</th>
+								<th>Detay</th>
+							</tr>
+							</thead>
+							<tbody>
+							@{
+								i = 0;
+							}
+							@foreach (var item in getCourseStudentList)
+							{
+								<tr>
+									<td>@(i+1)</td>
+									<td>@getCourseList[i].CourseName</td>
+									<td>@getCourseList[i].CourseCode</td>
+									<td>@item.AttendanceSum</td>
+									<td></td>
+									@{
+										i++;	
+									}
+									<td>
+										<a href="~/Home/Detail/@item.Id" class="btn btn-info">Detay</a>
+										<!-- <div class="progress progress-sm progress-half-rounded m-none mt-xs light">
+											<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+												100%
+											</div>
+										</div> -->
+									</td>
+								</tr>
+							}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+
+}else if (usr.UserRole == 2)
+{
+	Teacher getTeacher = db.Teachers.FirstOrDefault(t => t.UserId == usr.UserId);
+	List<CourseTeacher> getCourseTeacherList = db.CourseTeachers.Where(t => t.TeacherId == getTeacher.TeacherId).ToList();
+	Course[] getCourseList = new Course[getCourseTeacherList.Count];
+	int i = 0;
+	foreach (var crs in getCourseTeacherList)
+	{
+		getCourseList[i] = db.Courses.FirstOrDefault(t => t.Id == crs.CourseId);
+		i++;
+	}
+	
+	<div class="col-lg-12 col-lg-12">
+		<section class="panel">
+			<header class="panel-heading panel-heading-transparent">
+
+				<h2 class="panel-title">Verilen Dersler</h2>
+			</header>
+			<div class="panel-body">
+				<div class="table-responsive">
+					<table class="table table-striped mb-none">
+						<thead>
+						<tr>
+							<th>#</th>
+							<th>Dersler</th>
+							<th>Ders Kodu</th>
+							<th>Öğrenci sayısı</th>
+							<th>Sınıf Listesi</th>
+							<th>Yoklama Girişi</th>
+						</tr>
+						</thead>
+						<tbody>
+						@{
+							i = 0;
+						}
+						@foreach (var item in getCourseTeacherList)
+						{
+							<tr>
+								<td>@(i+1)</td>
+								<td>@getCourseList[i].CourseName</td>
+								<td>@getCourseList[i].CourseCode</td>
+								<td>---</td>
+								
+								@{
+									i++;	
+								}
+								<td>
+									<a href="#" class="btn btn-xs btn-info">Sınıf Listesi</a>
+								</td>
+								<td>
+									<a href="#" class="btn btn-xs btn-info">Yoklama Girişi</a>
+								</td>
+							</tr>
+						}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</section>
+	</div>
+}

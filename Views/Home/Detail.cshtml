@@ -1,0 +1,117 @@
+@using Microsoft.EntityFrameworkCore
+@model IEnumerable<Comp4920_SAS.Models.AttendanceLog>
+@{
+	ViewBag.Title = "title";
+	Layout = "_Layout";
+	DataContext db = new DataContext();
+	int crstdId = ViewBag.crstdId;
+	CourseStudent crstd = db.CourseStudents.SingleOrDefault(t => t.Id == crstdId);
+	Course crs = db.Courses.SingleOrDefault(t => t.Id == crstd.CourseId);
+	int geldigiDersler = 0;
+}
+<div class="panel-body">
+	<div class="col-md-6 col-lg-12 col-xl-6">
+		<div class="row">
+			<div class="col-md-3 col-lg-3 col-xl-3">
+				<section class="panel">
+					<div class="panel-body bg-primary">
+						<div class="widget-summary widget-summary-sm">
+							<div class="widget-summary-col">
+								<div class="summary">
+									<h4 class="title">Devamsızlık Hakkı</h4>
+									<div class="info">
+										<strong class="amount">@((crs.LecturePerWeek*14)*30/100)</strong>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+			<div class="col-md-3 col-lg-3 col-xl-3">
+				<section class="panel">
+					<div class="panel-body bg-secondary">
+						<div class="widget-summary widget-summary-sm">
+							<div class="widget-summary-col">
+								<div class="summary">
+									<h4 class="title">Yapılan Devamsızlık</h4>
+									<div class="info">
+										<strong class="amount">@crstd.AttendanceSum</strong>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+			<div class="col-md-3 col-lg-3 col-xl-3">
+				<section class="panel">
+					<div class="panel-body bg-tertiary">
+						<div class="widget-summary widget-summary-sm">
+							<div class="widget-summary-col">
+								<div class="summary">
+									<h4 class="title">Kalan Devamsızlık</h4>
+									<div class="info">
+										<strong class="amount">@((crs.LecturePerWeek * 14)*30/100 - crstd.AttendanceSum)</strong>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+			<div class="col-md-3 col-lg-3 col-xl-3">
+				<section class="panel">
+					<div class="panel-body bg-quartenary">
+						<div class="widget-summary widget-summary-sm">
+							<div class="widget-summary-col">
+								<div class="summary">
+									<h4 class="title">Geldiği Ders Sayısı</h4>
+									<div class="info">
+										<strong class="amount">
+											@foreach(var item in Model){
+												if ((item.IsSchoolCard == 1 && item.IsFingerprint == 1) || item.IsOnline == 1)
+												{
+													geldigiDersler++;
+												}
+											}
+											@geldigiDersler
+										</strong>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<!-- Mobile Metas -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+		<!-- Vendor CSS -->
+		<link rel="stylesheet" href="~/octopus-master/octopus/assets/vendor/bootstrap/css/bootstrap.css" />
+		<link rel="stylesheet" href="~/octopus-master/octopus/assets/vendor/font-awesome/css/font-awesome.css" />
+		<link rel="stylesheet" href="~/octopus-master/octopus/assets/vendor/magnific-popup/magnific-popup.css" />
+		<link rel="stylesheet" href="~/octopus-master/octopus/assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
+
+		<!-- Specific Page Vendor CSS -->
+		<link rel="stylesheet" href="~/octopus-master/octopus/assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css" />
+		<link rel="stylesheet" href="~/octopus-master/octopus/assets/vendor/fullcalendar/fullcalendar.css" />
+		<link rel="stylesheet" href="~/octopus-master/octopus/assets/vendor/fullcalendar/fullcalendar.print.css" media="print" />
+
+		<!-- Theme CSS -->
+		<link rel="stylesheet" href="~/octopus-master/octopus/assets/stylesheets/theme.css" />
+
+		<!-- Skin CSS -->
+		<link rel="stylesheet" href="~/octopus-master/octopus/assets/stylesheets/skins/default.css" />
+
+		<!-- Theme Custom CSS -->
+		<link rel="stylesheet" href="~/octopus-master/octopus/assets/stylesheets/theme-custom.css">
+
+		<!-- Head Libs -->
+		<script src="~/octopus-master/octopus/assets/vendor/modernizr/modernizr.js"></script>
+
+	</div>
+</div>

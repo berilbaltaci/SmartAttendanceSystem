@@ -1,0 +1,80 @@
+@model System.Collections.Generic.IEnumerable<Comp4920_SAS.Models.CourseStudent>
+
+@{
+    Layout = "_Layout";
+    DataContext db=new DataContext();
+    int i = 0;
+    Student[] getStudentArray=new Student[Model.Count()];
+    User[] getUserArray =new User[Model.Count()];
+    foreach (var item in Model)
+    {
+        getStudentArray[i] = db.Students.FirstOrDefault(t => t.StudentId == item.StudentId);
+        getUserArray[i] = db.Users.FirstOrDefault(t => t.UserId == getStudentArray[i].UserId);
+        i++;
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>title</title>
+</head>
+<body>
+<div class="col-lg-12 col-lg-12">
+    <section class="panel">
+        <header class="panel-heading panel-heading-transparent">
+
+            <h2 class="panel-title">Verilen Dersler</h2>
+        </header>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-striped mb-none">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Ad</th>
+                        <th>Soyad</th>
+                        <th>Numara</th>
+                        <th>Devamsızlık Sayısı</th>
+                        <th>Devamsızlık Durumu</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @{
+                        i = 0;
+                    }
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@(i+1)</td>
+                            <td>@getUserArray[i].Name</td>
+                            <td>@getUserArray[i].Surname</td>
+                            <td>@getUserArray[i].SchoolId</td>
+                            <td>@item.AttendanceSum</td>
+                                @if (item.AttendanceSituation == 1)
+                                {
+                                    <td><span class="label label-success">Good</span></td>
+                                }
+                                else if (item.AttendanceSituation == 2)
+                                {
+                                    <td><span class="label label-warning">Critical</span></td>
+
+                                }
+                                else if (item.AttendanceSituation == 3)
+                                {
+                                    <td><span class="label label-danger">Repeat</span></td>
+                                }
+                            @{
+                                i++;	
+                            }
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>
