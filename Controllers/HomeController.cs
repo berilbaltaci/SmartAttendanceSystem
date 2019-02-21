@@ -38,10 +38,17 @@ namespace Comp4920_SAS.Controllers
         {
             User getUser = HttpContext.Session.GetObject<User>("user");
             Teacher getTeacher = db.Teachers.FirstOrDefault(t => t.UserId == getUser.UserId);
-           
+            Course getCourse=new Course();
             
             List<CourseTeacher> getCourseTeacherList = db.CourseTeachers.Where(t => t.TeacherId == getTeacher.TeacherId).ToList();
-            Course getCourse=db.Courses.FirstOrDefault(t=>t.Id==id);            
+            foreach (var item in getCourseTeacherList)
+            {
+                if (item.CourseId == id)
+                {
+                    getCourse=db.Courses.FirstOrDefault(t=>t.Id==id);            
+
+                }
+            }
             List<CourseStudent> getCourseStudentList=db.CourseStudents.Where(t=>t.CourseId==getCourse.Id).ToList();
             return View(getCourseStudentList);
         }
