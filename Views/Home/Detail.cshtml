@@ -70,7 +70,7 @@
 									<div class="info">
 										<strong class="amount">
 											@foreach(var item in Model){
-												if ((item.IsSchoolCard == 1 && item.IsFingerprint == 1) || item.IsOnline == 1)
+												if ((item.IsSchoolCard == 1 && item.IsFingerprint == 1) || item.IsOnline.Equals(2))
 												{
 													geldigiDersler++;
 												}

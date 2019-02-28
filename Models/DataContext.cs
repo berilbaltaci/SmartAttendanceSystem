@@ -22,5 +22,6 @@ namespace Comp4920_SAS.Models
         public DbSet<Course> Courses { get; set; }
         public DbSet<CourseStudent> CourseStudents { get; set; }
         public DbSet<AttendanceLog> AttendanceLogs { get; set; }
+        public DbSet<Session> Sessions { get; set; }
     }
 }

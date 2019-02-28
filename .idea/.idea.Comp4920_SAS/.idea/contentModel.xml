@@ -21,6 +21,8 @@
         <e p="CourseTeacher.cs" t="Include" />
         <e p="DataContext.cs" t="Include" />
         <e p="ErrorViewModel.cs" t="Include" />
+        <e p="InstanceResult.cs" t="Include" />
+        <e p="Session.cs" t="Include" />
         <e p="Student.cs" t="Include" />
         <e p="Teacher.cs" t="Include" />
         <e p="User.cs" t="Include" />
@@ -39,12 +41,14 @@
       </e>
       <e p="Repository" t="Include">
         <e p="AttendanceLogRepository.cs" t="Include" />
+        <e p="CourseTeacherRepository.cs" t="Include" />
       </e>
       <e p="SessionExtension.cs" t="Include" />
       <e p="Startup.cs" t="Include" />
       <e p="Views" t="Include">
         <e p="_ViewImports.cshtml" t="Include" />
         <e p="Home" t="Include">
+          <e p="AttendanceEntryList.cshtml" t="Include" />
           <e p="CourseList.cshtml" t="Include" />
           <e p="Detail.cshtml" t="Include" />
           <e p="Index.cshtml" t="Include" />

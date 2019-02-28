@@ -87,4 +87,4 @@
 /Users/berilbaltaci/Desktop/Comp4920_SAS/obj/Debug/netcoreapp2.2/Comp4920_SAS.csproj.CopyComplete
 /Users/berilbaltaci/Desktop/Comp4920_SAS/obj/Debug/netcoreapp2.2/Razor/Views/Home/CourseList.g.cshtml.cs
 /Users/berilbaltaci/Desktop/Comp4920_SAS/obj/Debug/netcoreapp2.2/Razor/Views/Home/Detail.g.cshtml.cs
-/Users/berilbaltaci/Desktop/Comp4920_SAS/obj/Debug/netcoreapp2.2/Razor/Views/Home/StudentList.g.cshtml.cs
+/Users/berilbaltaci/Desktop/Comp4920_SAS/obj/Debug/netcoreapp2.2/Razor/Views/Home/AttendanceEntryList.g.cshtml.cs

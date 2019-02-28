@@ -15,4 +15,10 @@ namespace Comp4920_SAS.Models
         public int IsOnline { get; set; }
         public int TeacherId { get; set; }
     }
+
+    public enum IsOnline
+    {
+        Gelmedi, 
+        Geldi
+    }
 }

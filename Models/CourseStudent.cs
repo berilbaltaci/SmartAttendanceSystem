@@ -12,4 +12,5 @@ namespace Comp4920_SAS.Models
         public int AttendanceSituation { get; set; }
 
     }
+    
 }
