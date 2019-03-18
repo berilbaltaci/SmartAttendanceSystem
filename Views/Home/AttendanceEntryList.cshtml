@@ -1,0 +1,106 @@
+@using System.Net.Mime
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@model List<string>
+
+@{
+    Layout = "_Layout";
+    
+    DataContext db=new DataContext();
+    int id = ViewBag.CourseId;
+    
+    User getUser = HttpContextAccessor.HttpContext.Session.GetObject<User>("user");
+    Teacher getTeacher = db.Teachers.FirstOrDefault(t => t.UserId == getUser.UserId);            
+    List<CourseTeacher> getCourseTeacherList = db.CourseTeachers.Where(t => t.TeacherId == getTeacher.TeacherId).ToList();
+    
+    Course getCourse=new Course();
+    foreach (var item in getCourseTeacherList)
+    {
+        if (item.CourseId == id)
+        {
+            getCourse=db.Courses.FirstOrDefault(t=>t.Id==item.CourseId);
+            break;
+        }
+    }
+    List<CourseStudent> courseStudentList=db.CourseStudents.Where(t=>t.CourseId==getCourse.Id).ToList();  
+    List<User> getUserList=new List<User>();
+    foreach (var item in courseStudentList)
+    {
+        Student std = db.Students.FirstOrDefault(t => t.StudentId == item.StudentId);
+        User u = db.Users.FirstOrDefault(t => t.UserId == std.UserId);
+        getUserList.Add(u);
+    }
+    int i = 0;
+}
+
+@using (Html.BeginForm())
+{
+    <form asp-controller="Home" asp-action="AttendanceEntryList" method="post">
+    <section class="panel">
+        <header class="panel-heading panel-heading-transparent">
+
+            <h2 class="panel-title">Verilen Dersler</h2>
+        </header>
+        <div class="form-group panel-body">
+            <div class="table-responsive">
+                <table class="table table-striped mb-none">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Ad</th>
+                        <th>Soyad</th>
+                        <th>Numara</th>
+                        <th>Devamsızlık Sayısı</th>
+                        <th>Devamsızlık Durumu</th>
+                        <th>Yoklama Girişi</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var item in courseStudentList)
+                    {
+                        <tr>
+                            <td>@(i + 1)</td>
+                            <td>@getUserList[i].Name</td>
+                            <td>@getUserList[i].Surname</td>
+                            <td>@getUserList[i].SchoolId</td>
+                            <td>@item.AttendanceSum</td>
+                            @if (item.AttendanceSituation == 1)
+                            {
+                                <td><span class="label label-success">Good</span></td>
+                            }
+                            else if (item.AttendanceSituation == 2)
+                            {
+                                <td><span class="label label-warning">Critical</span></td>
+
+                            }
+                            else if (item.AttendanceSituation == 3)
+                            {
+                                <td><span class="label label-danger">Repeat</span></td>
+                            }
+                            <td>
+                                <select name="devam" id="devam" class="form-control" >  @* asp-items="@new SelectList(Enum.GetNames(typeof(IsOnline)))" *@
+                                    <option value="Gelmedi">Gelmedi</option>
+                                    <option value="Geldi">Geldi</option>
+                                </select>
+                            </td>
+                            
+                            @{
+                                i++;
+                            }
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+                <p>
+                    <input class="btn btn-info" style="float: right" type="submit" id="btn" value="Kaydet"/>
+                </p>
+            </div>
+        </div>
+    </section>
+</form>
+}
+@* *@
+@* <script> *@
+@*     $("#devam").val("Geldi").change(); *@
+@* </script> *@

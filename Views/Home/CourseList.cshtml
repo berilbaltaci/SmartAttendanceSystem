@@ -1,80 +1,144 @@
 @model System.Collections.Generic.IEnumerable<Comp4920_SAS.Models.CourseStudent>
 
 @{
-    Layout = "_Layout";
-    DataContext db=new DataContext();
-    int i = 0;
-    Student[] getStudentArray=new Student[Model.Count()];
-    User[] getUserArray =new User[Model.Count()];
-    foreach (var item in Model)
-    {
-        getStudentArray[i] = db.Students.FirstOrDefault(t => t.StudentId == item.StudentId);
-        getUserArray[i] = db.Users.FirstOrDefault(t => t.UserId == getStudentArray[i].UserId);
-        i++;
-    }
+	Layout = "_Layout";
+	DataContext db = new DataContext();
+	int i = 0;
+	List<Student> getStudentList = new List<Student>();
+	List<User> getUserList = new List<User>();
+	Course getCourse = new Course();
+	List<int> devamYuzdesiList=new List<int>();
+	int devamYuzdesiToplam = 0;
+	
+	foreach (var item in Model)
+	{
+		if (i == 0)
+		{
+			getCourse = db.Courses.FirstOrDefault(t => t.Id == item.CourseId);
+		}
+		int devamYuzdesiO = (item.AttendanceSum * 100) / (getCourse.LecturePerWeek * 14 * 30 / 100);
+		if (devamYuzdesiO>100)
+		{
+			devamYuzdesiList.Add(100);
+
+		}
+		else
+		{
+			devamYuzdesiList.Add(devamYuzdesiO);
+		}
+		devamYuzdesiToplam=devamYuzdesiToplam+devamYuzdesiList[i];
+		Student s = db.Students.FirstOrDefault(t => t.StudentId == item.StudentId);
+		getStudentList.Add(s);
+		User u = db.Users.FirstOrDefault(t => t.UserId == s.UserId);
+		getUserList.Add(u);
+		i++;
+	}
+	int devamYuzdesi = devamYuzdesiToplam / getUserList.Count;
 }
 
 <!DOCTYPE html>
 
 <html>
 <head>
-    <title>title</title>
+	<title>title</title>
 </head>
 <body>
-<div class="col-lg-12 col-lg-12">
-    <section class="panel">
-        <header class="panel-heading panel-heading-transparent">
+<div class="panel-body">
+	<div class="col-lg-12 col-lg-12">
+		<section class="panel">
+			<header class="panel-heading panel-heading-transparent">
 
-            <h2 class="panel-title">Verilen Dersler</h2>
-        </header>
-        <div class="panel-body">
-            <div class="table-responsive">
-                <table class="table table-striped mb-none">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Ad</th>
-                        <th>Soyad</th>
-                        <th>Numara</th>
-                        <th>Devamsızlık Sayısı</th>
-                        <th>Devamsızlık Durumu</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @{
-                        i = 0;
-                    }
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>@(i+1)</td>
-                            <td>@getUserArray[i].Name</td>
-                            <td>@getUserArray[i].Surname</td>
-                            <td>@getUserArray[i].SchoolId</td>
-                            <td>@item.AttendanceSum</td>
-                                @if (item.AttendanceSituation == 1)
-                                {
-                                    <td><span class="label label-success">Good</span></td>
-                                }
-                                else if (item.AttendanceSituation == 2)
-                                {
-                                    <td><span class="label label-warning">Critical</span></td>
-
-                                }
-                                else if (item.AttendanceSituation == 3)
-                                {
-                                    <td><span class="label label-danger">Repeat</span></td>
-                                }
-                            @{
-                                i++;	
-                            }
-                        </tr>
-                    }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
+				<h2 class="panel-title" style="font-size: 16px"><b>@getCourse.CourseName </b>--- @DateTime.Today.Day / @DateTime.Today.Month / @DateTime.Today.Year -- @DateTime.Now.DayOfWeek.ToString()</h2>
+			</header>
+				<div class="row">
+					<div class="col-md-3 col-lg-3 col-xl-3">
+						<section class="panel">
+							<div class="panel-body bg-primary">
+								<div class="widget-summary widget-summary-sm">
+									<div class="widget-summary-col">
+										<div class="summary">
+											<h4 class="title" style="font-size: 16px">Öğrenci Sayısı</h4>
+											<div class="info">
+												<strong class="amount" style="font-size: 16px">@getUserList.Count</strong>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</section>
+					</div>
+					<div class="col-md-3 col-lg-3 col-xl-3" style="float: right">
+						<section class="panel">
+							<div class="panel-body bg-secondary">
+								<div class="widget-summary widget-summary-sm">
+									<div class="widget-summary-col">
+										<div class="summary">
+											<h4 class="title" style="font-size: 16px">Devamsızlık Yüzdesi</h4>
+											<div class="info">
+												<strong class="amount" style="font-size: 16px">%@devamYuzdesi</strong>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</section>
+					</div>
+				</div>
+				<div class="table-responsive">
+					<table class="table table-striped mb-none">
+						<thead>
+						<tr>
+							<th>#</th>
+							<th>Ad</th>
+							<th>Soyad</th>
+							<th>Numara</th>
+							<th>Devamsızlık Sayısı</th>
+							<th>Devamsızlık Yüzdesi</th>
+							<th>Devamsızlık Durumu</th>
+						</tr>
+						</thead>
+						<tbody>
+						@{
+							i = 0;
+						}
+						@foreach (var item in Model)
+						{
+							<tr>
+								<td>@(i + 1)</td>
+								<td>@getUserList[i].Name</td>
+								<td>@getUserList[i].Surname</td>
+								<td>@getUserList[i].SchoolId</td>
+								<td>@item.AttendanceSum</td>
+								<td>%@devamYuzdesiList[i]
+								</td>
+								@if (item.AttendanceSituation == 1)
+								{
+									<td>
+										<span class="label label-success">Good</span>
+									</td>
+								}
+								else if (item.AttendanceSituation == 2)
+								{
+									<td>
+										<span class="label label-warning">Critical</span>
+									</td>
+								}
+								else if (item.AttendanceSituation == 3)
+								{
+									<td>
+										<span class="label label-danger">Repeat</span>
+									</td>
+								}
+								@{
+									i++;
+								}
+							</tr>
+						}
+						</tbody>
+					</table>
+				</div>
+		</section>
+	</div>
 </div>
 </body>
 </html>

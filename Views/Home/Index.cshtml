@@ -1,22 +1,49 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.Diagnostics
 @inject IHttpContextAccessor HttpContextAccessor
 @{
     ViewData["Title"] = "Home Page";
     Layout = "_Layout";
 	DataContext db=new DataContext();
     User usr = HttpContextAccessor.HttpContext.Session.GetObject<User>("user");
+	int year = DateTime.Now.Year;
+	int month = DateTime.Now.Month;
+	string term = "";
+	if (1 < month && month < 6)
+	{
+		term = "Bahar";
+	}else if (6 <= month && month < 9)
+	{
+		term = "Yaz";
+	}
+	else if(9<=month && month <=12)
+	{
+		term = "Güz";
+	}
 	
 }
 @if (usr.UserRole == 1)
 {
+	
 	Student getStudent = db.Students.FirstOrDefault(t => t.UserId==usr.UserId);
 	List<CourseStudent> getCourseStudentList = db.CourseStudents.Where(t => t.StudentId == getStudent.StudentId).ToList();
-	Course[] getCourseList = new Course[getCourseStudentList.Count];
+	List<Course> getCourseList=new List<Course>();	
 	int i = 0;
 	foreach (var item in getCourseStudentList)
 	{
-		getCourseList[i] = db.Courses.SingleOrDefault(t => t.Id == item.CourseId);
+		Course c = db.Courses.SingleOrDefault(t => t.Id == item.CourseId && t.Year==year.ToString() && t.Term.Equals(term));
+		if (c != null)
+		{
+			getCourseList.Add(c);
+		}
+		
+	}
+	List<CourseStudent> getCourseStudentList2 =new List<CourseStudent>();
+	foreach (var item in getCourseList)
+	{
+		CourseStudent cs = db.CourseStudents.FirstOrDefault(t => t.CourseId == item.Id);
+		getCourseStudentList2.Add(cs);
 		i++;
 	}
 	<div class="row">
@@ -40,9 +67,9 @@
 							</thead>
 							<tbody>
 							@{
-								i = 0;
+								 i = 0;
 							}
-							@foreach (var item in getCourseStudentList)
+							@foreach (var item in getCourseStudentList2)
 							{
 								<tr>
 									<td>@(i+1)</td>
@@ -87,19 +114,33 @@
 {
 	Teacher getTeacher = db.Teachers.FirstOrDefault(t => t.UserId == usr.UserId);
 	List<CourseTeacher> getCourseTeacherList = db.CourseTeachers.Where(t => t.TeacherId == getTeacher.TeacherId).ToList();
-	Course[] getCourseList = new Course[getCourseTeacherList.Count];
+	List<Course> getCourseList = new List<Course>();
 	List<CourseStudent> getCourseStudentList=new List<CourseStudent>();
 
 	int stuNum = 0;
 	int i = 0;
 	foreach (var crs in getCourseTeacherList)
 	{
-		getCourseList[i] = db.Courses.FirstOrDefault(t => t.Id == crs.CourseId);
-		CourseStudent cs = db.CourseStudents.FirstOrDefault(t => t.CourseId == getCourseList[i].Id);
-		getCourseStudentList.Add(cs);
-		i++;
+		Course c = db.Courses.FirstOrDefault(t => t.Id == crs.CourseId && t.Term==term && t.Year==year.ToString());
+		if (c != null)
+		{
+			getCourseList.Add(c);
+			for ( i = 0; i < getCourseList.Count; i++)
+			{
+				CourseStudent cs = db.CourseStudents.FirstOrDefault(t => t.CourseId == getCourseList[i].Id);
+				getCourseStudentList.Add(cs);
+			}
+		}
 	}
-	
+	List<CourseTeacher> getCourseTeacherList2 = new List<CourseTeacher>();
+	foreach (var item in getCourseList)
+	{
+		CourseTeacher ct = db.CourseTeachers.FirstOrDefault(t => t.CourseId == item.Id);
+		if (ct != null)
+		{
+			getCourseTeacherList2.Add(ct);
+		}
+	}
 	<div class="col-lg-12 col-lg-12">
 		<section class="panel">
 			<header class="panel-heading panel-heading-transparent">
@@ -123,20 +164,25 @@
 						@{
 							i = 0;
 						}
-						@foreach (var item in getCourseTeacherList)
+						@foreach (var item in getCourseTeacherList2)
 						{
+							stuNum = 0;
 							<tr>
 								<td>@(i+1)</td>
 								<td>@getCourseList[i].CourseName</td>
 								<td>@getCourseList[i].CourseCode</td>
 								<td>
 									@foreach (var item2 in getCourseStudentList)
-									{
-										if (item2.CourseId == item.CourseId)
-										{
-											stuNum++;
-										}
-									}
+									 {
+										 if (item2 == null)
+										 {
+											 continue;
+										 }
+										 if (item2.CourseId == item.CourseId)
+										 {
+											 stuNum++;
+										 }
+									 }
 									@stuNum
 								</td>
 								

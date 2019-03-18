@@ -37,13 +37,22 @@ namespace Comp4920_SAS.Controllers
 
         public IActionResult Detail(int id)
         {
-            List<AttendanceLog> al = alr.GetListByCourseStudentId(id).ProcessResult;
+            var getUser = HttpContext.Session.GetObject<User>("user");
+            if (getUser == null)
+            {
+                return RedirectToAction("Login");
+            }
+            List<AttendanceLog> al = db.AttendanceLogs.Where(t => t.CourseStudentId == id).ToList();
             ViewBag.crstdId = id;
             return View(al);
         }
         public IActionResult CourseList(int id)
         {
             User getUser = HttpContext.Session.GetObject<User>("user");
+            if (getUser == null)
+            {
+                return RedirectToAction("Login");
+            }
             Teacher getTeacher = db.Teachers.FirstOrDefault(t => t.UserId == getUser.UserId);
             Course getCourse=new Course();
             
@@ -62,6 +71,11 @@ namespace Comp4920_SAS.Controllers
         [HttpGet]
         public IActionResult AttendanceEntryList(int id)
         {
+            var getUser = HttpContext.Session.GetObject<User>("user");
+            if (getUser == null)
+            {
+                return RedirectToAction("Login");
+            }
             ViewBag.CourseId = id;
             return View();
         }
@@ -69,10 +83,14 @@ namespace Comp4920_SAS.Controllers
         [HttpPost]
         public IActionResult AttendanceEntryList(List<string> devam, int id)
         {
+            User getUser = HttpContext.Session.GetObject<User>("user");
+            if (getUser == null)
+            {
+                return RedirectToAction("Login");
+            }
             int i = 0;
             var courseId = id;
             ViewBag.CourseId = courseId;
-            User getUser = HttpContext.Session.GetObject<User>("user");
             Teacher getTeacher = db.Teachers.FirstOrDefault(t => t.UserId == getUser.UserId);            
             List<CourseTeacher> getCourseTeacherList = db.CourseTeachers.Where(t => t.TeacherId == getTeacher.TeacherId).ToList();
     
@@ -86,19 +104,27 @@ namespace Comp4920_SAS.Controllers
                 }
             }
             List<CourseStudent> courseStudentList=db.CourseStudents.Where(t=>t.CourseId==getCourse.Id).ToList();  
-           
-            List<CourseStudent> newCourseStudentList=new List<CourseStudent>();
+            List<CourseStudent> gelenStudentList=new List<CourseStudent>();            
+            List<CourseStudent> gelmeyenStudentList=new List<CourseStudent>();
+
             foreach (var item in devam)
             {
                 if (item.Equals("Geldi"))
                 {
-                    newCourseStudentList.Add(courseStudentList[i]);
-                    i++;
-                    continue;
+                    gelenStudentList.Add(courseStudentList[i]);
+                }else if (item.Equals("Gelmedi"))
+                {
+                    String date = DateTime.Now.Day + "/" + DateTime.Now.Month + "/" + DateTime.Now.Year;
+                    AttendanceLog alSearch = db.AttendanceLogs.FirstOrDefault(t => t.CourseStudentId == courseStudentList[i].Id && t.Date==date);
+                    if (alSearch == null)
+                    {
+                        gelmeyenStudentList.Add(courseStudentList[i]);
+                        courseStudentList[i].AttendanceSum++;
+                    }
                 }
                 i++;
             }
-            result.resultint = alr.Insert(newCourseStudentList, getUser);
+            result.resultint = alr.Insert(gelenStudentList, gelmeyenStudentList, getUser);
             if (result.resultint.IsSuccessed)
             {
                 return RedirectToAction("AttendanceEntryList");
@@ -113,6 +139,7 @@ namespace Comp4920_SAS.Controllers
         {
             return View();
         }
+        
         [HttpPost, ValidateAntiForgeryToken]
         public IActionResult Login(User user)
         {

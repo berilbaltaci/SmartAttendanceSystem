@@ -66,16 +66,18 @@
 						<div class="widget-summary widget-summary-sm">
 							<div class="widget-summary-col">
 								<div class="summary">
-									<h4 class="title">Geldiği Ders Sayısı</h4>
+									<h4 class="title">Devamsızlık Yüzdesi</h4>
 									<div class="info">
 										<strong class="amount">
-											@foreach(var item in Model){
-												if ((item.IsSchoolCard == 1 && item.IsFingerprint == 1) || item.IsOnline.Equals(2))
-												{
-													geldigiDersler++;
-												}
+											%
+											@if (crstd.AttendanceSum > crs.LecturePerWeek * 14 * 30 / 100)
+											{
+												@(100)
 											}
-											@geldigiDersler
+											else
+											{
+												@((crstd.AttendanceSum*100)/(crs.LecturePerWeek * 14 * 30 / 100))
+											}
 										</strong>
 									</div>
 								</div>
@@ -83,6 +85,37 @@
 						</div>
 					</div>
 				</section>
+			</div>
+		</div>
+
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-md-9">
+					<div id="calendar"></div>
+				</div>
+				<div class="col-md-3">
+					<p class="h4 text-light">Draggable Events</p>
+
+					<hr />
+
+					<div id='external-events'>
+						<div class="external-event label label-default" data-event-class="fc-event-default">Default Event</div>
+						<div class="external-event label label-primary" data-event-class="fc-event-primary">Primary Event</div>
+						<div class="external-event label label-success" data-event-class="fc-event-success">Success Event</div>
+						<div class="external-event label label-warning" data-event-class="fc-event-warning">Warning Event</div>
+						<div class="external-event label label-info" data-event-class="fc-event-info">Info Event</div>
+						<div class="external-event label label-danger" data-event-class="fc-event-danger">Danger Event</div>
+						<div class="external-event label label-dark" data-event-class="fc-event-dark">Dark Event</div>
+
+						<hr />
+						<div>
+							<div class="checkbox-custom checkbox-default ib">
+								<input id="RemoveAfterDrop" type="checkbox"/>
+								<label for="RemoveAfterDrop">remove after drop</label>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -113,5 +146,27 @@
 		<!-- Head Libs -->
 		<script src="~/octopus-master/octopus/assets/vendor/modernizr/modernizr.js"></script>
 
+		<!-- Vendor -->
+		<script src="~/octopus-master/octopus/assets/vendor/jquery/jquery.js"></script>
+		<script src="~/octopus-master/octopus/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+		<script src="~/octopus-master/octopus/assets/vendor/bootstrap/js/bootstrap.js"></script>
+		<script src="~/octopus-master/octopus/assets/vendor/nanoscroller/nanoscroller.js"></script>
+		<script src="~/octopus-master/octopus/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+		<script src="~/octopus-master/octopus/assets/vendor/magnific-popup/magnific-popup.js"></script>
+		<script src="~/octopus-master/octopus/assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
+		
+		<!-- Specific Page Vendor -->
+		<script src="~/octopus-master/octopus/assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js"></script>
+		<script src="~/octopus-master/octopus/assets/vendor/jquery-ui-touch-punch/jquery.ui.touch-punch.js"></script>
+		<script src="~/octopus-master/octopus/assets/vendor/fullcalendar/lib/moment.min.js"></script>
+		<script src="~/octopus-master/octopus/assets/vendor/fullcalendar/fullcalendar.js"></script>
+		
+		<!-- Theme Custom -->
+		<script src="~/octopus-master/octopus/assets/javascripts/theme.custom.js"></script>
+		
+		<!-- Theme Initialization Files -->
+		<script src="~/octopus-master/octopus/assets/javascripts/theme.init.js"></script>
+		<!-- Examples -->
+		<script src="~/octopus-master/octopus/assets/javascripts/pages/examples.calendar.js"></script>
 	</div>
 </div>
