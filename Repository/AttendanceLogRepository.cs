@@ -26,7 +26,7 @@ namespace Comp4920_SAS.Repository
                 AttendanceLog al = new AttendanceLog();
                 al.TeacherId = tchr.TeacherId;
                 al.CourseStudentId = item.Id;
-                al.Date = DateTime.Now.Day+"/"+DateTime.Now.Month+"/"+DateTime.Now.Year;
+                al.Date = DateTime.Now;
                 al.IsOnline=1;
                 al.IsFingerprint = 0;
                 al.IsSchoolCard = 0;
@@ -38,11 +38,27 @@ namespace Comp4920_SAS.Repository
                 AttendanceLog al = new AttendanceLog();
                 al.TeacherId = tchr.TeacherId;
                 al.CourseStudentId = item.Id;
-                al.Date = DateTime.Now.Day + "/" + DateTime.Now.Month + "/" + DateTime.Now.Year;
+                al.Date = DateTime.Now;
                 al.IsOnline=0;
                 al.IsFingerprint = 0;
                 al.IsSchoolCard = 0;
                 db.AttendanceLogs.Add(al);
+                CourseStudent cs =db.CourseStudents.FirstOrDefault(t=>t.Id==al.CourseStudentId);
+                cs.AttendanceSum=cs.AttendanceSum+1;
+                Course getCourse = db.Courses.FirstOrDefault(t => t.Id == cs.CourseId);
+                if (cs.AttendanceSum < (getCourse.LecturePerWeek * 14 * 30 / 100)-2)
+                {
+                    cs.AttendanceSituation = 1;
+                }else if ((getCourse.LecturePerWeek * 14 * 30 / 100) - 2 <= cs.AttendanceSum &&
+                          cs.AttendanceSum <= (getCourse.LecturePerWeek * 14 * 30 / 100))
+                {
+                    cs.AttendanceSituation = 2;
+                }
+                else if((getCourse.LecturePerWeek * 14 * 30 / 100)<cs.AttendanceSum)
+                {
+                    cs.AttendanceSituation = 3;
+                }
+                db.CourseStudents.Update(cs);
             }
             return result.GetResult(db);
         }

@@ -25,16 +25,19 @@ namespace Comp4920_SAS.Controllers
          CourseTeacherRepository ctr=new CourseTeacherRepository();
          InstanceResult<List<AttendanceLog>> result = new InstanceResult<List<AttendanceLog>>();
 
+         
+         //Bu actionResult uygulamanın ilk çalışan parçasıdır. Eğer bir kullanıcı girişi yapılmamışsa Login ekranına yönlendirilmesi sağlanıyor.
         public IActionResult Index()
         {
             var getUser = HttpContext.Session.GetObject<User>("user");
-            if (HttpContext.Session.GetObject<User>("user") == null)
+            if (getUser == null)
             {
                 return RedirectToAction("Login");
             }
             return View();
         }
 
+        //Öğrencinin seçmiş olduğu derslerden seçilen derse ait olan devamsızlık bilgisinin görünmesini sağlar.
         public IActionResult Detail(int id)
         {
             var getUser = HttpContext.Session.GetObject<User>("user");
@@ -42,10 +45,13 @@ namespace Comp4920_SAS.Controllers
             {
                 return RedirectToAction("Login");
             }
-            List<AttendanceLog> al = db.AttendanceLogs.Where(t => t.CourseStudentId == id).ToList();
+            DateTime todayDate=DateTime.Now;
+            List<AttendanceLog> al = db.AttendanceLogs.Where(t => t.CourseStudentId == id && t.Date<=todayDate).ToList();
             ViewBag.crstdId = id;
             return View(al);
         }
+        
+        //Öğrencinin seçtiği derslerin listelendiği ekrandır.
         public IActionResult CourseList(int id)
         {
             User getUser = HttpContext.Session.GetObject<User>("user");
@@ -66,8 +72,14 @@ namespace Comp4920_SAS.Controllers
                 }
             }
             List<CourseStudent> getCourseStudentList=db.CourseStudents.Where(t=>t.CourseId==getCourse.Id).ToList();
+            if (getCourseStudentList.Count <= 0)
+            {
+                return View("Index");
+            }
             return View(getCourseStudentList);
         }
+        
+        //Öğretmen kartı bulunmayan öğrencilerin sınıfta bulunduğunu sisteme girebilecek.
         [HttpGet]
         public IActionResult AttendanceEntryList(int id)
         {
@@ -89,8 +101,7 @@ namespace Comp4920_SAS.Controllers
                 return RedirectToAction("Login");
             }
             int i = 0;
-            var courseId = id;
-            ViewBag.CourseId = courseId;
+            ViewBag.CourseId = id;
             Teacher getTeacher = db.Teachers.FirstOrDefault(t => t.UserId == getUser.UserId);            
             List<CourseTeacher> getCourseTeacherList = db.CourseTeachers.Where(t => t.TeacherId == getTeacher.TeacherId).ToList();
     
@@ -114,17 +125,32 @@ namespace Comp4920_SAS.Controllers
                     gelenStudentList.Add(courseStudentList[i]);
                 }else if (item.Equals("Gelmedi"))
                 {
-                    String date = DateTime.Now.Day + "/" + DateTime.Now.Month + "/" + DateTime.Now.Year;
-                    AttendanceLog alSearch = db.AttendanceLogs.FirstOrDefault(t => t.CourseStudentId == courseStudentList[i].Id && t.Date==date);
+                    DateTime date = DateTime.Now;
+                    DateTime yesterday = DateTime.Now.AddHours(-(getCourse.LecturePerWeek));
+                    AttendanceLog alSearch = db.AttendanceLogs.FirstOrDefault(t => t.CourseStudentId == courseStudentList[i].Id && (yesterday<t.Date && t.Date<date));
                     if (alSearch == null)
                     {
                         gelmeyenStudentList.Add(courseStudentList[i]);
-                        courseStudentList[i].AttendanceSum++;
                     }
                 }
                 i++;
             }
             result.resultint = alr.Insert(gelenStudentList, gelmeyenStudentList, getUser);
+            foreach (var item in gelmeyenStudentList)
+            {
+                if (item.AttendanceSum < (getCourse.LecturePerWeek * 14 * 30 / 100)-2)
+                {
+                    item.AttendanceSituation = 1;
+                }else if ((getCourse.LecturePerWeek * 14 * 30 / 100) - 2 <= item.AttendanceSum &&
+                          item.AttendanceSum <= (getCourse.LecturePerWeek * 14 * 30 / 100))
+                {
+                    item.AttendanceSituation = 2;
+                }
+                else if((getCourse.LecturePerWeek * 14 * 30 / 100)<item.AttendanceSum)
+                {
+                    item.AttendanceSituation = 3;
+                }
+            }
             if (result.resultint.IsSuccessed)
             {
                 return RedirectToAction("AttendanceEntryList");
@@ -145,7 +171,7 @@ namespace Comp4920_SAS.Controllers
         {
             using (DataContext db = new DataContext())
             {
-                var userDetails = db.Users.FirstOrDefault(t => t.SchoolId.Equals(user.SchoolId ) && t.Password == user.Password);
+                var userDetails = db.Users.FirstOrDefault(t => t.SchoolId.Equals(user.SchoolId ) && t.Password.Equals(user.Password));
                 if (userDetails == null)
                 {
                     ViewBag.HataMesaj = "E-mail veya şifre hatalı.";

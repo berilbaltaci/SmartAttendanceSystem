@@ -50,7 +50,6 @@ a:active {
 .inner-wrapper {
 	display: table;
 	min-height: 100vh;
-	padding-top: 60px;
 	table-layout: fixed;
 	overflow: hidden;
 	width: 100%;

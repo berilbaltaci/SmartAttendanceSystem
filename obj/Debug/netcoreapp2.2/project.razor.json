@@ -1,0 +1,14 @@
+{
+  "ProjectFilePath": "/Users/berilbaltaci/Desktop/Comp4920_SAS/Comp4920_SAS.csproj",
+  "TargetFramework": "netcoreapp2.2",
+  "TagHelpers": [],
+  "Configuration": {
+    "ConfigurationName": "MVC-2.1",
+    "LanguageVersion": "2.1",
+    "Extensions": [
+      {
+        "ExtensionName": "MVC-2.1"
+      }
+    ]
+  }
+}
