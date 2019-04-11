@@ -82,7 +82,7 @@ namespace Comp4920_SAS.Controllers
         //Öğretmen kartı bulunmayan öğrencilerin sınıfta bulunduğunu sisteme girebilecek.
         [HttpGet]
         public IActionResult AttendanceEntryList(int id)
-        {
+        {                   
             var getUser = HttpContext.Session.GetObject<User>("user");
             if (getUser == null)
             {

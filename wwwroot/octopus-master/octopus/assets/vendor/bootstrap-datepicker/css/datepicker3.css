@@ -400,7 +400,7 @@ fieldset[disabled] .datepicker table tr td.range.today.disabled:hover.active {
 .open .dropdown-toggle.datepicker table tr td.selected:hover,
 .open .dropdown-toggle.datepicker table tr td.selected.disabled,
 .open .dropdown-toggle.datepicker table tr td.selected.disabled:hover {
-  background-image: none;
+  background-color: #858585;
 }
 .datepicker table tr td.selected.disabled,
 .datepicker table tr td.selected:hover.disabled,

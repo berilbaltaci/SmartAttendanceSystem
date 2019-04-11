@@ -86,11 +86,11 @@ a:active,
 }
 /* Sign Screens - Wrappers */
 .body-sign .panel-sign .panel-title-sign .title {
-	background-color: #0088cc;
+	background-color: #00529C;
 }
 
 .body-sign .panel-sign .panel-body {
-	border-top-color: #0088cc;
+	border-top-color: #00529C;
 }
 /* Lock Screen */
 .body-locked .current-user .user-image {
@@ -132,8 +132,8 @@ body .btn-primary.dropdown-toggle {
 body .btn-primary {
 	color: #ffffff;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-	background-color: #0088cc;
-	border-color: #0088cc;
+	background-color: #00529C;
+	border-color: #00529C;
 }
 
 body .btn-primary:hover {

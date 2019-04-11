@@ -50,11 +50,11 @@ a:active {
 .inner-wrapper {
 	display: table;
 	min-height: 100vh;
+	/* padding-top: 60px; */
 	table-layout: fixed;
 	overflow: hidden;
 	width: 100%;
 }
-
 /* Layout Base - Content Body */
 .content-body {
 	display: table-cell;
@@ -15315,7 +15315,7 @@ html.dark .invoice table.table > tbody tr > td {
 	background: transparent;
 }
 .body-sign .panel-sign .panel-title-sign .title {
-	background-color: #cccccc;
+	background-color: #01519E;
 	border-radius: 5px 5px 0 0;
 	color: #FFF;
 	display: inline-block;
@@ -15328,7 +15328,7 @@ html.dark .invoice table.table > tbody tr > td {
 }
 .body-sign .panel-sign .panel-body {
 	background: #FFF;
-	border-top: 5px solid #cccccc;
+	border-top: 5px solid #01519E;
 	border-radius: 5px 0 5px 5px;
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 	padding: 33px 33px 15px;
@@ -15348,7 +15348,7 @@ html.dark .invoice table.table > tbody tr > td {
 	position: relative;
 }
 .body-sign .line-thru span {
-	color: #CCC;
+	color: #01519E;
 	position: relative;
 	z-index: 3;
 }

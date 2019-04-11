@@ -12,10 +12,8 @@
 		factory(jQuery, moment);
 	}
 })(function($, moment) {
-
-;;
-
-var defaults = {
+	
+	var defaults = {
 
 	lang: 'en',
 
@@ -33,7 +31,7 @@ var defaults = {
 		right: 'today prev,next'
 	},
 	weekends: true,
-	weekNumbers: false,
+	weekNumbers: true,
 
 	weekNumberTitle: 'W',
 	weekNumberCalculation: 'local',

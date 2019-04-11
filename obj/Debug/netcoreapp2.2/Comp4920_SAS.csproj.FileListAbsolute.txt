@@ -72,6 +72,9 @@
 /Users/berilbaltaci/Desktop/Comp4920_SAS/obj/Debug/netcoreapp2.2/Comp4920_SAS.TagHelpers.input.cache
 /Users/berilbaltaci/Desktop/Comp4920_SAS/obj/Debug/netcoreapp2.2/Comp4920_SAS.TagHelpers.output.cache
 /Users/berilbaltaci/Desktop/Comp4920_SAS/obj/Debug/netcoreapp2.2/Comp4920_SAS.RazorCoreGenerate.cache
+/Users/berilbaltaci/Desktop/Comp4920_SAS/obj/Debug/netcoreapp2.2/Razor/Views/Home/AttendanceEntryList.g.cshtml.cs
+/Users/berilbaltaci/Desktop/Comp4920_SAS/obj/Debug/netcoreapp2.2/Razor/Views/Home/CourseList.g.cshtml.cs
+/Users/berilbaltaci/Desktop/Comp4920_SAS/obj/Debug/netcoreapp2.2/Razor/Views/Home/Detail.g.cshtml.cs
 /Users/berilbaltaci/Desktop/Comp4920_SAS/obj/Debug/netcoreapp2.2/Razor/Views/Home/Index.g.cshtml.cs
 /Users/berilbaltaci/Desktop/Comp4920_SAS/obj/Debug/netcoreapp2.2/Razor/Views/Home/Login.g.cshtml.cs
 /Users/berilbaltaci/Desktop/Comp4920_SAS/obj/Debug/netcoreapp2.2/Razor/Views/Shared/Error.g.cshtml.cs
@@ -85,6 +88,3 @@
 /Users/berilbaltaci/Desktop/Comp4920_SAS/obj/Debug/netcoreapp2.2/Comp4920_SAS.dll
 /Users/berilbaltaci/Desktop/Comp4920_SAS/obj/Debug/netcoreapp2.2/Comp4920_SAS.pdb
 /Users/berilbaltaci/Desktop/Comp4920_SAS/obj/Debug/netcoreapp2.2/Comp4920_SAS.csproj.CopyComplete
-/Users/berilbaltaci/Desktop/Comp4920_SAS/obj/Debug/netcoreapp2.2/Razor/Views/Home/CourseList.g.cshtml.cs
-/Users/berilbaltaci/Desktop/Comp4920_SAS/obj/Debug/netcoreapp2.2/Razor/Views/Home/Detail.g.cshtml.cs
-/Users/berilbaltaci/Desktop/Comp4920_SAS/obj/Debug/netcoreapp2.2/Razor/Views/Home/AttendanceEntryList.g.cshtml.cs

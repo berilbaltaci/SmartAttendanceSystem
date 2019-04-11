@@ -1,5 +1,4 @@
 
-
 (function( $ ) {
 
 	'use strict';
@@ -39,8 +38,6 @@
 				right: 'prev,today,next,basicDay,basicWeek,month'
 			},
 
-			timeFormat: 'h:mm',
-
 			titleFormat: {
 				month: 'MMMM YYYY',      // September 2009
 			    week: "MMM d YYYY",      // Sep 13 2009
@@ -52,8 +49,8 @@
 				next: 'fa fa-caret-right',
 			},
 
-			editable: true,
-			droppable: true, // this allows things to be dropped onto the calendar !!!
+			editable: false,
+			droppable: false, // this allows things to be dropped onto the calendar !!!
 			drop: function(date, allDay) { // this function is called when something is dropped
 				var $externalEvent = $(this);
 				// retrieve the dropped element's stored Event Object
@@ -103,5 +100,27 @@
 		initCalendar();
 		initCalendarDragNDrop();
 	});
+	
+	function onClick() {
+		var mysql = require('mysql');
+		
+		var session = '<%=Session["user"]%>';
+		var con = mysql.createConnection({
+			host: "localhost",
+			user: "root",
+			password: "12345678",
+			database: "SmartAtt"
+		});
+
+		con.connect(function(err) {
+			if (err) throw err;
+			debugger;
+			var sql = "SELECT * FROM AttendanceLog WHERE courseStudentID = ?";
+			con.query(sql, [session.getAttribute(courseStudentId)], function (err, result, fields) {
+				if (err) throw err;
+				console.log(result);
+			});
+		});
+	}
 
 }).apply(this, [ jQuery ]);

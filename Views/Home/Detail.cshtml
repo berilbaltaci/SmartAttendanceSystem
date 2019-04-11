@@ -52,7 +52,15 @@
 								<div class="summary">
 									<h4 class="title">Kalan Devamsızlık</h4>
 									<div class="info">
-										<strong class="amount">@((crs.LecturePerWeek * 14)*30/100 - crstd.AttendanceSum)</strong>
+										<strong class="amount">@{
+											                       var kalanDev = ((crs.LecturePerWeek * 14) * 30 / 100 - crstd.AttendanceSum);
+											                       if (kalanDev < 0)
+											                       {
+												                       kalanDev = 0;
+											                       }   
+										                       }
+											@kalanDev
+											</strong>
 									</div>
 								</div>
 							</div>
@@ -87,73 +95,45 @@
 				</section>
 			</div>
 		</div>
-
-		<div class="panel-body">
+	</div>
+</div>
+<br>
+<div class="panel-body">
+	<section class="panel">
+		<div>
 			<div class="row">
 				<div class="col-md-9">
-					<div id="calendar"></div>
-				</div>
-				<div class="col-md-3">
-					<p class="h4 text-light">Draggable Events</p>
-
-					<hr />
-
-					<div id='external-events'>
-						<div class="external-event label label-default" data-event-class="fc-event-default">Default Event</div>
-						<div class="external-event label label-primary" data-event-class="fc-event-primary">Primary Event</div>
-						<div class="external-event label label-success" data-event-class="fc-event-success">Success Event</div>
-						<div class="external-event label label-warning" data-event-class="fc-event-warning">Warning Event</div>
-						<div class="external-event label label-info" data-event-class="fc-event-info">Info Event</div>
-						<div class="external-event label label-danger" data-event-class="fc-event-danger">Danger Event</div>
-						<div class="external-event label label-dark" data-event-class="fc-event-dark">Dark Event</div>
-
-						<hr />
-						<div>
-							<div class="checkbox-custom checkbox-default ib">
-								<input id="RemoveAfterDrop" type="checkbox"/>
-								<label for="RemoveAfterDrop">remove after drop</label>
-							</div>
-						</div>
-					</div>
+					<div id="calendar" onclick="onClick()"></div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="row">
-		<!-- Mobile Metas -->
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	</section>
+</div>
+<div class="row">
+	<!-- Mobile Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-		<!-- Vendor CSS -->
-		<link rel="stylesheet" href="~/octopus-master/octopus/assets/vendor/bootstrap/css/bootstrap.css" />
-		<link rel="stylesheet" href="~/octopus-master/octopus/assets/vendor/font-awesome/css/font-awesome.css" />
-		<link rel="stylesheet" href="~/octopus-master/octopus/assets/vendor/magnific-popup/magnific-popup.css" />
-		<link rel="stylesheet" href="~/octopus-master/octopus/assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
+	<!-- Vendor CSS -->
+	<link rel="stylesheet" href="~/octopus-master/octopus/assets/vendor/bootstrap/css/bootstrap.css" />
+	<link rel="stylesheet" href="~/octopus-master/octopus/assets/vendor/font-awesome/css/font-awesome.css" />
+	<link rel="stylesheet" href="~/octopus-master/octopus/assets/vendor/magnific-popup/magnific-popup.css" />
+	<link rel="stylesheet" href="~/octopus-master/octopus/assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
+	
+	<!-- Specific Page Vendor CSS -->
+	<link rel="stylesheet" href="~/octopus-master/octopus/assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css" />
+	<link rel="stylesheet" href="~/octopus-master/octopus/assets/vendor/fullcalendar/fullcalendar.css" />
+	<link rel="stylesheet" href="~/octopus-master/octopus/assets/vendor/fullcalendar/fullcalendar.print.css" media="print" />
 
-		<!-- Theme CSS -->
-		<link rel="stylesheet" href="~/octopus-master/octopus/assets/stylesheets/theme.css" />
+	<!-- Theme CSS -->
+	<link rel="stylesheet" href="~/octopus-master/octopus/assets/stylesheets/theme.css" />
 
-		<!-- Skin CSS -->
-		<link rel="stylesheet" href="~/octopus-master/octopus/assets/stylesheets/skins/default.css" />
+	<!-- Skin CSS -->
+	<link rel="stylesheet" href="~/octopus-master/octopus/assets/stylesheets/skins/default.css" />
 
-		<!-- Theme Custom CSS -->
-		<link rel="stylesheet" href="~/octopus-master/octopus/assets/stylesheets/theme-custom.css">
-		@* *@
-		@* <!-- Vendor --> *@
-		@* <script src="~/octopus-master/octopus/assets/vendor/jquery/jquery.js"></script> *@
-		@* <script src="~/octopus-master/octopus/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script> *@
-		@* <script src="~/octopus-master/octopus/assets/vendor/bootstrap/js/bootstrap.js"></script> *@
-		@* <script src="~/octopus-master/octopus/assets/vendor/nanoscroller/nanoscroller.js"></script> *@
-		@* <script src="~/octopus-master/octopus/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script> *@
-		@* <script src="~/octopus-master/octopus/assets/vendor/magnific-popup/magnific-popup.js"></script> *@
-		@* <script src="~/octopus-master/octopus/assets/vendor/jquery-placeholder/jquery.placeholder.js"></script> *@
-		@* *@
-		@* <!-- Specific Page Vendor --> *@
-		@* <script src="~/octopus-master/octopus/assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js"></script> *@
-		@* <script src="~/octopus-master/octopus/assets/vendor/jquery-ui-touch-punch/jquery.ui.touch-punch.js"></script> *@
-		<script src="~/octopus-master/octopus/assets/vendor/fullcalendar/lib/moment.min.js"></script>
-		<script src="~/octopus-master/octopus/assets/vendor/fullcalendar/fullcalendar.js"></script>
-		
-		<!-- Examples -->
-		<script src="~/octopus-master/octopus/assets/javascripts/pages/examples.calendar.js"></script>
-	</div>
+	<!-- Theme Custom CSS -->
+	<link rel="stylesheet" href="~/octopus-master/octopus/assets/stylesheets/theme-custom.css">
+	<script src="~/octopus-master/octopus/assets/vendor/fullcalendar/lib/moment.min.js"></script>
+	<script src="~/octopus-master/octopus/assets/vendor/fullcalendar/fullcalendar.js"></script>
+	<!-- Examples -->
+	<script src="~/octopus-master/octopus/assets/javascripts/pages/examples.calendar.js"></script>
 </div>

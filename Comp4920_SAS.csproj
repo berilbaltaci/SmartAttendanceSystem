@@ -20,4 +20,46 @@
       <Folder Include="wwwroot\img" />
     </ItemGroup>
 
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\bower.json" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\css\bootstrap-year-calendar.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\css\bootstrap-year-calendar.min.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\docs\index.rst" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\js\bootstrap-year-calendar.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\js\bootstrap-year-calendar.min.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\js\languages\bootstrap-year-calendar.ca.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\js\languages\bootstrap-year-calendar.cs.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\js\languages\bootstrap-year-calendar.de.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\js\languages\bootstrap-year-calendar.es.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\js\languages\bootstrap-year-calendar.eu.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\js\languages\bootstrap-year-calendar.fi.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\js\languages\bootstrap-year-calendar.fr.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\js\languages\bootstrap-year-calendar.hr.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\js\languages\bootstrap-year-calendar.hu.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\js\languages\bootstrap-year-calendar.id.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\js\languages\bootstrap-year-calendar.is.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\js\languages\bootstrap-year-calendar.it.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\js\languages\bootstrap-year-calendar.ja.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\js\languages\bootstrap-year-calendar.lt.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\js\languages\bootstrap-year-calendar.lv.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\js\languages\bootstrap-year-calendar.nl.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\js\languages\bootstrap-year-calendar.pl.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\js\languages\bootstrap-year-calendar.pt.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\js\languages\bootstrap-year-calendar.ru.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\js\languages\bootstrap-year-calendar.sk.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\js\languages\bootstrap-year-calendar.sr.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\js\languages\bootstrap-year-calendar.th.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\js\languages\bootstrap-year-calendar.tr.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\js\languages\bootstrap-year-calendar.ua.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\js\languages\bootstrap-year-calendar.uk.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\js\languages\bootstrap-year-calendar.uz.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\js\languages\bootstrap-year-calendar.zh-CN.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\js\languages\bootstrap-year-calendar.zh-TW.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\LICENSE" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\package.json" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\README.md" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap-year-calendar-master\typescript\bootstrap-year-calendar.d.ts" />
+    </ItemGroup>
+
 </Project>

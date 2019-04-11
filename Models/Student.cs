@@ -13,6 +13,6 @@ namespace Comp4920_SAS.Models
         public int FacultyId { get; set; }
         public int DepartmentId { get; set; }
         public int Class { get; set; }
-        public double GPA { get; set; }
+        public double Gpa { get; set; }
     }
 }

@@ -13,10 +13,6 @@ namespace Comp4920_SAS.Repository
         private static DataContext db = new DataContext();
         ResultProcess<AttendanceLog> result = new ResultProcess<AttendanceLog>();
 
-        public Result<List<AttendanceLog>> GetListByCourseStudentId(int id)
-        {
-            return result.GetListResult(db.AttendanceLogs.Where(t => t.CourseStudentId == id).ToList());
-        }
         public Result<int> Insert(List<CourseStudent> gelenStudentList, List<CourseStudent> gelmeyenStudentList, User user)
         {
             Teacher tchr = db.Teachers.FirstOrDefault(t => t.UserId == user.UserId);
